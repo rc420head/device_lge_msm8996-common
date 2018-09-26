@@ -158,10 +158,6 @@ PRODUCT_PACKAGES += \
     liboverlay \
     libqdMetaData.system
 
-# Doze mode
-PRODUCT_PACKAGES += \
-    LGDoze
-
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \

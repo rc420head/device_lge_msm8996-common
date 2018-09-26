@@ -1,8 +1,16 @@
-allow system_app sysfs_gesture:file rw_file_perms;
 allow system_app vendor_file:file rx_file_perms;
-
-# Allow system_app to read and create files in cnd_core_data_file
-allow system_app cnd_core_data_file:dir w_dir_perms;
-allow system_app cnd_core_data_file:file create_file_perms;
-
-set_prop(system_app, camera_prop)
+allow system_app sysfs_fpc_key:file { rw_file_perms };
+allow system_app sysfs_gesture:file rw_file_perms;
+allow system_app sysfs_zram:dir search;
+allow system_app sysfs:file { write read };
+allow system_app time_daemon:unix_stream_socket connectto;
+allow system_app default_prop:property_service set;
+allow system_app default_android_service:service_manager add;
+allow system_app bootloader_boot_reason_prop:file read;
+allow system_app boottime_prop:file read;
+allow system_app proc_pagetypeinfo:file read;
+allow system_app ipa_dev:chr_file { read write };
+allow system_app system_app_service:service_manager add;
+allow system_app cnd:binder { call transfer };
+allow system_app cnd_vendor_prop:file { getattr open read };
+allow system_app hal_datafactory_hwservice:hwservice_manager find;

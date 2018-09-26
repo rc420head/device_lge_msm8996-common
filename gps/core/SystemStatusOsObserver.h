@@ -315,13 +315,7 @@ inline SystemStatusOsObserver :: HandleRequestData :: ~HandleRequestData() {}
 inline SystemStatusOsObserver :: HandleUnsubscribeReq :: ~HandleUnsubscribeReq () {}
 inline SystemStatusOsObserver :: HandleUnsubscribeAllReq :: ~HandleUnsubscribeAllReq () {}
 
-inline SystemStatusOsObserver :: HandleNotify :: ~HandleNotify () {
-    list <IDataItemCore *> :: iterator it = mDList.begin ();
-    for (; it != mDList.end (); ++it) {
-        delete *it;
-        *it = NULL;
-    }
-}
+inline SystemStatusOsObserver :: HandleNotify :: ~HandleNotify () {}
 
 inline SystemStatusOsObserver :: HandleTurnOn :: ~HandleTurnOn () {}
 inline SystemStatusOsObserver :: HandleTurnOff :: ~HandleTurnOff () {}

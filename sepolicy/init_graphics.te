@@ -6,6 +6,7 @@ init_daemon_domain(init_graphics)
 allow init_graphics self:capability { chown fowner fsetid };
 
 allow init_graphics init_graphics_exec:file { rx_file_perms entrypoint };
+allow init_graphics qti_init_shell:file { rx_file_perms entrypoint };
 allow init_graphics vendor_shell_exec:file { rx_file_perms entrypoint };
 allow init_graphics vendor_toolbox_exec:file rx_file_perms;
 
@@ -24,4 +25,3 @@ set_prop(init_graphics, freq_prop)
 
 # allow setting UBWC props
 set_prop(init_graphics, vendor_gralloc_prop)
-allow init_graphics debug_prop:property_service set;
