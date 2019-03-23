@@ -1,3 +1,38 @@
+# Audio
+etc/permissions/audiosphere.xml
+framework/audiosphere.jar
+vendor/lib/libacdb-fts.so
+vendor/lib/libacdbmapper.so
+vendor/lib/libacdbrtac.so
+vendor/lib/libadiertac.so
+vendor/lib/libadm.so
+vendor/lib/libaudcal.so
+vendor/lib/libaudioalsa.so
+vendor/lib/libmdsprpc.so
+vendor/lib/libqtigef.so
+vendor/lib/soundfx/libasphere.so
+vendor/lib/soundfx/libqcbassboost.so
+vendor/lib/soundfx/libqcreverb.so
+vendor/lib/soundfx/libqcvirt.so
+vendor/lib/soundfx/libshoebox.so
+vendor/lib64/libacdb-fts.so
+vendor/lib64/libacdbmapper.so
+vendor/lib64/libacdbrtac.so
+vendor/lib64/libadiertac.so
+vendor/lib64/libaudcal.so
+vendor/lib64/libaudioalsa.so
+vendor/lib64/libmdsprpc.so
+vendor/lib64/libqtigef.so
+vendor/lib64/soundfx/libasphere.so
+vendor/lib64/soundfx/libqcbassboost.so
+vendor/lib64/soundfx/libqcreverb.so
+vendor/lib64/soundfx/libqcvirt.so
+vendor/lib64/soundfx/libshoebox.so
+
+# Audio (acdbloader)
+vendor/lib/libacdbloader.so
+vendor/lib64/libacdbloader.so
+
 # Bluetooth - aptX
 lib64/libaptX_encoder.so
 lib64/libaptXHD_encoder.so
@@ -8,7 +43,17 @@ vendor/lib/liboptizoom.so
 vendor/lib/libseemore.so
 vendor/lib/libtrueportrait.so
 vendor/lib/libubifocus.so
+vendor/lib/libSJFingerDetect.so
 vendor/lib64/libseemore.so
+vendor/lib/libsymphony-1.1.2.so
+vendor/lib/libsymphony-1.1.3.so
+vendor/lib/libsymphonypower-1.1.2.so
+vendor/lib/libsymphonypower-1.1.3.so
+vendor/lib64/libsdsprpc.so
+vendor/lib64/libsymphony-1.1.2.so
+vendor/lib64/libsymphony-1.1.3.so
+vendor/lib64/libsymphonypower-1.1.2.so
+vendor/lib64/libsymphonypower-1.1.3.so
 
 # Camera postprocessing - mmcamera
 vendor/lib/libmmcamera_chromaflash_lib.so
@@ -48,8 +93,8 @@ etc/firmware/cpp_firmware_v1_12_0.fw:vendor/firmware/cpp_firmware_v1_12_0.fw
 -priv-app/HotwordEnrollmentXGoogleWCD9335/HotwordEnrollmentXGoogleWCD9335.apk;PRESIGNED
 
 # IR
--lib/libcir_driver.so:vendor/lib/libcir_driver.so
--lib64/libcir_driver.so:vendor/lib64/libcir_driver.so
+-lib/libcir_driver.so
+-lib64/libcir_driver.so
 
 # LG Keymaster
 lib/hw/lgkm.default.so
@@ -59,9 +104,34 @@ lib64/hw/lgkm.default.so
 lib64/hw/lgkm.msm8996.so
 lib64/liblgkm.so
 
+# Listen
+vendor/lib/hw/sound_trigger.primary.msm8996.so
+vendor/lib/libadpcmdec.so
+vendor/lib/libsmwrapper.so
+vendor/lib/vendor.qti.voiceprint@1.0.so
+vendor/lib64/hw/sound_trigger.primary.msm8996.so
+vendor/lib64/vendor.qti.voiceprint@1.0.so
+
 # Misc firmware
-etc/firmware/leia_pfp_470.fw:vendor/firmware/leia_pfp_470.fw
-etc/firmware/leia_pm4_470.fw:vendor/firmware/leia_pm4_470.fw
+vendor/firmware/leia_pfp_470.fw
+vendor/firmware/leia_pm4_470.fw
+
+# Fingerprint Sensors
+lib64/hw/fingerprint.msm8996.so:vendor/lib64/hw/fingerprint.msm8998.so
+framework/vendor.qti.hardware.fingerprint-V1.0-java.jar:vendor/framework/vendor.qti.hardware.fingerprint-V1.0-java.jar
+vendor/lib/vendor.qti.hardware.fingerprint@1.0.so
+vendor/lib64/vendor.qti.hardware.fingerprint@1.0.so
+
+# Sysnode
+framework/vendor.lge.hardware.sysnode-V1.0-java.jar:vendor/framework/vendor.lge.hardware.sysnode-V1.0-java.jar
+lib/vendor.lge.hardware.sysnode@1.0.so:vendor/lib/vendor.lge.hardware.sysnode@1.0.so
+lib64/vendor.lge.hardware.sysnode@1.0.so:vendor/lib64/vendor.lge.hardware.sysnode@1.0.so
+vendor/bin/hw/vendor.lge.hardware.sysnode@1.0-service
+vendor/etc/init/vendor.lge.hardware.sysnode@1.0-service.rc
+vendor/lib/hw/vendor.lge.hardware.sysnode@1.0-client.so
+vendor/lib/hw/vendor.lge.hardware.sysnode@1.0-impl.so
+vendor/lib64/hw/vendor.lge.hardware.sysnode@1.0-client.so
+vendor/lib64/hw/vendor.lge.hardware.sysnode@1.0-impl.so
 
 # NFC firmware
 vendor/firmware/libpn548ad_fw.so:vendor/lib/libpn548ad_fw.so
@@ -84,12 +154,33 @@ vendor/firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/na/verizon/cdmaless/
 vendor/firmware/image/modem_pr/mcfg/configs/mcfg_sw/generic/na/verizon/hvolte/mcfg_sw.mbn|9253d2970e4dc6456b538a0be729b4487da2c6f6
 
 # Sensors
+vendor/bin/sensors.qcom:vendor/bin/sensors.qti
+vendor/lib/hw/activity_recognition.msm8996.so
+vendor/lib/libsensor1.so
+vendor/lib/libsensor_reg.so
+vendor/lib/libsensor_thresh.so
+vendor/lib/libsensor_user_cal.so
+vendor/lib/sensors.ssc.so
+vendor/lib64/hw/activity_recognition.msm8996.so
+vendor/lib64/libsensor1.so
+vendor/lib64/libsensor_reg.so
+vendor/lib64/libsensor_thresh.so
+vendor/lib64/libsensor_user_cal.so
+vendor/lib64/sensors.ssc.so
+
+# Sensors (LGE)
 vendor/lib/libsensor_lge_cal.so
 vendor/lib64/libsensor_lge_cal.so
 
 # Sprint
 -priv-app/SprintDM/SprintDM.apk
 -priv-app/SprintHM/SprintHM.apk
+
+# Thermal
+vendor/bin/thermal-engine
+-vendor/lib/libthermalclient.so
+-vendor/lib64/libthermalclient.so
+vendor/lib64/libthermalioctl.so
 
 # Verizon
 -app/VZWAPNLib/VZWAPNLib.apk;PRESIGNED

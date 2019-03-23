@@ -35,6 +35,7 @@ TARGET_2ND_CPU_VARIANT := kryo
 
 TARGET_BOARD_PLATFORM := msm8996
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno530
+TARGET_HAS_NO_SELECT_BUTTON := true
 
 TARGET_USES_64_BIT_BINDER := true
 
@@ -44,14 +45,21 @@ TARGET_NO_BOOTLOADER := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff loop.max_part=7
+BOARD_KERNEL_CMDLINE += sched_enable_hmp=1 sched_enable_power_aware=1 androidboot.configfs=true
+BOARD_KERNEL_CMDLINE += androidboot.wificountrycode=US
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x02000000
-BOARD_RAMDISK_OFFSET := 0x02200000
-TARGET_KERNEL_CLANG_COMPILE := true
+BOARD_RAMDISK_OFFSET     := 0x02200000
+TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_SOURCE := kernel/lge/msm8996
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+
+# Properties
+BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
+# PRODUCT_FULL_TREBLE_OVERRIDE := true
 
 # Audio
 BOARD_USES_ALSA_AUDIO := true
@@ -78,7 +86,8 @@ AUDIO_FEATURE_ENABLED_HW_ACCELERATED_EFFECTS := false
 AUDIO_FEATURE_ENABLED_AUDIOSPHERE := true
 endif
 USE_XML_AUDIO_POLICY_CONF := 1
-BOARD_SUPPORTS_SOUND_TRIGGER := true
+BOARD_SUPPORTS_SOUND_TRIGGER := false
+AUDIO_FEATURE_ENABLED_PLAYBACK_ULL := true
 AUDIO_USE_LL_AS_PRIMARY_OUTPUT := true
 AUDIO_FEATURE_ENABLED_VBAT_MONITOR := true
 AUDIO_FEATURE_ENABLED_ANC_HEADSET := true
@@ -87,6 +96,8 @@ AUDIO_FEATURE_ENABLED_FLUENCE := true
 AUDIO_FEATURE_ENABLED_HDMI_EDID := true
 AUDIO_FEATURE_ENABLED_HFP := true
 AUDIO_FEATURE_ENABLED_INCALL_MUSIC := false
+AUDIO_FEATURE_ENABLED_SPLIT_A2DP := false
+AUDIO_FEATURE_ENABLED_DS2_DOLBY_DAP := true
 AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
 AUDIO_FEATURE_ENABLED_KPI_OPTIMIZE := true
 AUDIO_FEATURE_ENABLED_SPKR_PROTECTION := true
@@ -101,24 +112,33 @@ AUDIO_FEATURE_ENABLED_EXTN_RESAMPLER := true
 endif
 AUDIO_FEATURE_ENABLED_SND_MONITOR := true
 
+# Shims
+TARGET_LD_SHIM_LIBS := \
+	/system/lib64/lib-imsvt.so|/system/vendor/lib64/libshim_ims.so
+
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_CUSTOM_BT_CONFIG := $(COMMON_PATH)/bluetooth/libbt_vndcfg.txt
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_PATH)/bluetooth
 
-# Offmode Charging
-WITH_CM_CHARGER := true
+# Charger
+BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
-BOARD_CHARGER_ENABLE_SUSPEND := false
-BACKLIGHT_PATH := "/sys/class/leds/lcd-backlight/brightness"
+
+# Bionic
+TARGET_NEEDS_LEGACY_MUTEX_HANDLE := true
 
 # Camera
-TARGET_LD_SHIM_LIBS := \
-    /system/vendor/lib/hw/camera.msm8996.so|/system/vendor/lib/libshim_camera.so \
-    /system/vendor/lib/libmmcamera_ppeiscore.so|/system/vendor/lib/libshim_camera.so
 USE_CAMERA_STUB := true
 USE_DEVICE_SPECIFIC_CAMERA := true
+TARGET_USES_QTI_CAMERA_DEVICE := true
+TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
+    /system/bin/mediaserver=23 \
+    /system/vendor/bin/mm-qcamera-daemon=23 \
+    /system/vendor/bin/hw/android.hardware.camera.provider@2.4-service=24 \
+    /system/vendor/bin/hw/android.hardware.audio@2.0-service=23 \
+    /system/vendor/bin/hw/android.hardware.sensors@1.0-service=22
 
 # CMHW
 BOARD_HARDWARE_CLASS += $(COMMON_PATH)/lineagehw
@@ -126,23 +146,30 @@ BOARD_HARDWARE_CLASS += $(COMMON_PATH)/lineagehw
 # CNE and DPM
 BOARD_USES_QCNE := true
 
+# Dexpreopt
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
+    endif
+  endif
+endif
+
 # Display
 BOARD_USES_ADRENO := true
 TARGET_CONTINUOUS_SPLASH_ENABLED := true
 TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_ION := true
-TARGET_USES_OVERLAY := true
-USE_OPENGL_RENDERER := true
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
 MAX_EGL_CACHE_SIZE := 2048*1024
-HAVE_ADRENO_SOURCE:= false
-OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
+OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 MAX_VIRTUAL_DISPLAY_DIMENSION := 4096
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
-VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
-SF_VSYNC_EVENT_PHASE_OFFSET_NS := 6000000
 TARGET_USES_HWC2 := true
 TARGET_USES_GRALLOC1 := true
+TARGET_USES_QCOM_DISPLAY_BSP := true
+TARGET_USES_COLOR_METADATA := true
 
 # Encryption
 TARGET_HW_DISK_ENCRYPTION := true
@@ -162,6 +189,7 @@ TARGET_FS_CONFIG_GEN += $(COMMON_PATH)/config.fs
 TARGET_PLATFORM_DEVICE_BASE := /devices/soc/
 
 # Media
+BOARD_SECCOMP_POLICY := $(PLATFORM_PATH)/seccomp_policy
 TARGET_USES_MEDIA_EXTENSIONS := true
 
 # Partitions
@@ -176,7 +204,13 @@ TARGET_USES_MKE2FS := true
 TARGET_NEEDS_PDFIUM_BIGINT := true
 
 # Power
-TARGET_HAS_NO_WIFI_STATS := true
+TARGET_HAS_NO_WLAN_STATS := true
+TARGET_TAP_TO_WAKE_NODE := "/sys/devices/virtual/input/lge_touch/tap2wake"
+TARGET_USES_INTERACTION_BOOST := true
+
+# RIL
+TARGET_RIL_VARIANT := caf
+TARGET_USES_OLD_MNC_FORMAT := true
 
 # Qualcomm
 BOARD_USES_QCOM_HARDWARE := true
@@ -192,11 +226,11 @@ BOARD_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy
 # Thermal
 USE_DEVICE_SPECIFIC_THERMAL := true
 
-# QTI
-TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
-
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
+
+# Telephony
+TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 
 # Wi-Fi
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
@@ -208,10 +242,6 @@ BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
-
-# Releasetools
-TARGET_RELEASETOOLS_EXTENSIONS := $(COMMON_PATH)
-TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_msm8996
 
 # inherit from the proprietary version
 -include vendor/lge/msm8996-common/BoardConfigVendor.mk

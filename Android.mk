@@ -83,6 +83,21 @@ $(SECUREKS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 ALL_DEFAULT_INSTALLED_MODULES += $(SECUREKS_SYMLINKS)
 # END SECUREKS Images
 
+# CPPF Images
+CPPF_IMAGES := \
+	cppf.b00 cppf.b01 cppf.b02 cppf.b03 cppf.b04 cppf.b05 \
+	cppf.b06 cppf.mdt
+
+CPPF_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/firmware/,$(notdir $(CPPF_IMAGES)))
+$(CPPF_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "CPPF firmware link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /persist-lg/firmware/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(CPPF_SYMLINKS)
+# END CPPF Images
+
 # WIDEVINE Images
 WIDEVINE_IMAGES := \
     widevine.b00 widevine.b01 widevine.b02 widevine.b03 widevine.b04 \
@@ -99,7 +114,7 @@ ALL_DEFAULT_INSTALLED_MODULES += $(WIDEVINE_SYMLINKS)
 # END WIDEVINE Images
 
 IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
-IMS_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR_APPS)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
+IMS_SYMLINKS := $(addprefix $(TARGET_OUT_APPS_PRIVILEGED)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
 $(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	@echo "IMS lib link: $@"
 	@mkdir -p $(dir $@)

@@ -4,6 +4,7 @@
 /sys/devices/bcm43xx/rfkill/rfkill[0-9](/.*)?                       u:object_r:sysfs_bluetooth_writable:s0
 
 # Camera
+/data/misc/camera/cam_socket[0-9]                                   u:object_r:camera_socket:s0
 /sys/devices/soc/8c0000\.qcom,msm-cam/video4linux/video0(/.*)?      u:object_r:sysfs_graphics:s0
 /sys/devices/soc/aa4000\.qcom,fd/video4linux/video1(/.*)?           u:object_r:sysfs_graphics:s0
 
@@ -14,9 +15,10 @@
 /dev/block/platform/soc/624000\.ufshc/by-name/encrypt               u:object_r:metadata_block_device:s0
 
 # Fingerprint
-/(vendor|system/vendor)/bin/fpc_early_loader                        u:object_r:fpc_early_loader_exec:s0
 /sys/devices/soc/75b7000\.spi/spi_master/spi8/spi8\.1(/.*)?         u:object_r:sysfs_devices_fingerprint:s0
 /sys/devices/soc/75ba000\.spi/spi_master/spi12/spi12\.[0-1](/.*)?   u:object_r:sysfs_devices_fingerprint:s0
+/sys/devices/virtual/input/lge_fingerprint/device_prepare           u:object_r:sysfs_lge_fingerprint_prepare:s0
+
 
 # FRP partition
 /dev/block/platform/soc/624000\.ufshc/by-name/persistent            u:object_r:frp_block_device:s0
@@ -28,9 +30,7 @@
 /sys/devices/virtual/graphics/fb[0-2](/.*)?                         u:object_r:sysfs_graphics:s0
 
 # Init
-/(vendor|system/vendor)/bin/init\.power\.sh                         u:object_r:init_power_exec:s0
-/(vendor|system/vendor)/bin/init\.qcom\.graphics\.sh                u:object_r:init_graphics_exec:s0
-/(vendor|system/vendor)/bin/init\.radio\.sh                         u:object_r:init_radio_exec:s0
+/(vendor|system/vendor)/bin/init\.lucye\.hdmi\.sh                   u:object_r:init_graphics_exec:s0
 
 # IR
 /dev/ttyHSL1                                                        u:object_r:cir_device:s0
@@ -41,10 +41,6 @@
 /sys/devices/virtual/lg_rgb_led/use_patterns/blink_patterns         u:object_r:sysfs_leds:s0
 /sys/devices(/platform)?/soc/[a-z0-9]+.qcom,mdss_mdp/[a-z0-9]+.qcom,mdss_mdp:qcom,mdss_fb_primary/leds/lcd-backlight-ex(/.*)?   u:object_r:sysfs_graphics:s0
 /sys/devices/soc.0/[a-z0-9]+.qcom,mdss_mdp/qcom,mdss_fb_primary.+[a-z0-9]/leds/lcd-backlight-ex(/.*)?   u:object_r:sysfs_graphics:s0
-
-# MPT
-/mpt(/.*)?                      u:object_r:mpt_file:s0
-/vendor/mpt(/.*)?               u:object_r:mpt_file:s0
 
 # Netmgr
 /data/misc/netmgr(/.*)?                                             u:object_r:net_data_file:s0
@@ -71,7 +67,20 @@
 /sns                                                                u:object_r:sensors_data_file:s0
 /sns/cal(/.*)?                                                      u:object_r:sensors_data_file:s0
 /persist-lg/sensors(/.*)?                                           u:object_r:sensors_persist_file:s0
-/vendor/sns(/.*)?                                                   u:object_r:sensors_data_file:s0
+
+# Sys
+/sys/devices/soc/soc:fpc_fpc1020/irq                            u:object_r:sysfs_fpc_irq:s0
+/sys/devices/soc/soc:fpc_fpc1020/report_home                    u:object_r:sysfs_fpc_key:s0
+/sys/devices/soc/soc:fpc_fpc1020/report_key                     u:object_r:sysfs_fpc_key:s0
+/sys/devices/soc/soc:fpc_fpc1020/screen_state                   u:object_r:sysfs_fpc_screen:s0
+/sys/devices/soc/soc:fpc_fpc1020/proximity_state                u:object_r:sysfs_fpc_proximity:s0
+/sys/module/fpc1020_tee/parameters/ignor_home_for_ESD           u:object_r:sysfs_fpc_key:s0
+/sys/devices/virtual/graphics/fb0/dci_p3                        u:object_r:sysfs_livedisplay:s0
+/sys/devices/virtual/graphics/fb0/srgb                          u:object_r:sysfs_livedisplay:s0
+
+# MSM camera related
+/dev/media[0-9]+                       u:object_r:camera_device:s0
+/dev/jpeg[0-9]+                        u:object_r:camera_device:s0
 
 # SPI
 /sys/bus/spi/devices                                                u:object_r:sysfs_spi:s0
@@ -81,6 +90,7 @@
 
 # perfd
 /(vendor|system/vendor)/bin/hw/android\.hardware\.power@1\.0-service.lge.msm8996         u:object_r:hal_power_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.power@1\.1-service.lge.msm8996         u:object_r:hal_power_default_exec:s0
 /(vendor|system/vendor)/bin/perfd                                   u:object_r:perfd_exec:s0
 /data/misc/perfd(/.*)?                                              u:object_r:perfd_data_file:s0
 /data/system/perfd(/.*)?                                            u:object_r:perfd_data_file:s0
