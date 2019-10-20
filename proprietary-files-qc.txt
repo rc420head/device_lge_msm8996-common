@@ -78,10 +78,6 @@ vendor/etc/cne/wqeclient/VZW/VZW_profile3.xml|9b123d81c9b8991499cda33b0706810e0c
 vendor/etc/cne/wqeclient/VZW/VZW_profile4.xml|ff91feb5060a6df07e3e4d9bc99ae58bccad7649
 vendor/etc/cne/wqeclient/VZW/VZW_profile5.xml|f76c894f3c6d5b6ed35113a088dc3174c900501b
 vendor/etc/cne/wqeclient/VZW/VZW_profile6.xml|14d136e7fcc682311757d3edc0b9d3eaeba11815
-vendor/lib64/com.quicinc.cne.api@1.0.so|184499ab67844a7d1766e1b363a37c742fcfd9cf
-vendor/lib64/com.quicinc.cne.api@1.1.so|08247c2ddf2b9777839cada843676a52aea73ab3
-vendor/lib/com.quicinc.cne.api@1.0.so|1aa96b04e2fdcdf1489d9113a6439b4f9878cac5
-vendor/lib/com.quicinc.cne.api@1.1.so|2262fb6dcf07c1f0ea2e75625b102f48f39cbc86
 vendor/lib64/com.quicinc.cne.constants@1.0.so|ab5a63b57145ddd9e0f28426d5a36216507b6102
 vendor/lib64/com.quicinc.cne.constants@2.0.so|84ab9c8b4ace589241778d33a1a10c1e10680e72
 vendor/lib64/com.quicinc.cne.constants@2.1.so|c35e3ec7868d132ccb280a52cd4b7563e2352d4c
